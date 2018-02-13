@@ -11,7 +11,7 @@ public class Bomb : MonoBehaviour {
 
     // Explosion Prefab
     public GameObject explosion;
-
+	public bool isPowerOn = false;
 
 	//Bomb explosion range positions in Vector2
 	private Vector2 roundedPos;
@@ -28,12 +28,21 @@ public class Bomb : MonoBehaviour {
 		Vector2 pos = transform.position;
 		pos.x = Mathf.Round (pos.x);
 		pos.y = Mathf.Round (pos.y);
+		roundedPos = new Vector2 (pos.x, pos.y);
+		 
 
-		roundedPos = new Vector2 (pos.x, pos.y); //Explosion center position
-		rangeUp = new Vector2 (pos.x, pos.y + 1); // Explosion covers 1 unit up
-		rangeRight = new Vector2 (pos.x + 1, pos.y); // Explosion covers 1 unit right
-		rangeDown = new Vector2 (pos.x, pos.y - 1); // Explosion covers 1 unit down
-		rangeLeft = new Vector2 (pos.x - 1, pos.y); // Explosion covers 1 unit left
+		if (!isPowerOn) {
+			rangeUp = new Vector2 (pos.x, pos.y + 1); // Explosion covers 1 unit up
+			rangeRight = new Vector2 (pos.x + 1, pos.y); // Explosion covers 1 unit right
+			rangeDown = new Vector2 (pos.x, pos.y - 1); // Explosion covers 1 unit down
+			rangeLeft = new Vector2 (pos.x - 1, pos.y); // Explosion covers 1 unit left
+		} else {
+			rangeUp = new Vector2 (pos.x, pos.y + 2); // Explosion covers 2 unit up
+			rangeRight = new Vector2 (pos.x + 2, pos.y); // Explosion covers 2 unit right
+			rangeDown = new Vector2 (pos.x, pos.y - 2); // Explosion covers 2 unit down
+			rangeLeft = new Vector2 (pos.x - 2, pos.y); // Explosion covers 2 unit left
+		}
+
 		
 
 
@@ -56,12 +65,25 @@ public class Bomb : MonoBehaviour {
 		Vector2 pos = transform.position;
 
 
+		if (isPowerOn) 
+		{
+			Block.destroyBlockAt(pos.x,   pos.y);   // same
+			Block.destroyBlockAt(pos.x,   pos.y+1); // top
+			Block.destroyBlockAt(pos.x,   pos.y+2); // top1
+			Block.destroyBlockAt(pos.x+1, pos.y);   // right
+			Block.destroyBlockAt(pos.x+2, pos.y);   // right1
+			Block.destroyBlockAt(pos.x,   pos.y-1); // bottom
+			Block.destroyBlockAt(pos.x,   pos.y-2); // bottom1
+			Block.destroyBlockAt(pos.x-1, pos.y);   // left
+			Block.destroyBlockAt(pos.x-2, pos.y);   // left1
+
+		} else {
 			Block.destroyBlockAt(pos.x,   pos.y);   // same
 			Block.destroyBlockAt(pos.x,   pos.y+1); // top
 			Block.destroyBlockAt(pos.x+1, pos.y);   // right
 			Block.destroyBlockAt(pos.x,   pos.y-1); // bottom
 			Block.destroyBlockAt(pos.x-1, pos.y);   // left
-
+		}
 			
 
      
@@ -89,6 +111,8 @@ public class Bomb : MonoBehaviour {
 		tempX = Mathf.Round(bombarman2.transform.position.x);
 		tempY = Mathf.Round(bombarman2.transform.position.y);
 		player2PosRounded = new Vector2 (tempX, tempY);
+
+
 
 		//If bomb explode within range of player 1...
 		if (player1PosRounded == roundedPos ||player1PosRounded == rangeUp

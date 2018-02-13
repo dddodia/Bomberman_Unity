@@ -8,11 +8,22 @@ public class Move : MonoBehaviour {
 	public  int life = 100,bombCount = 10;
 
 	///Player moving speed.
-    public float speed = 0.1f;
+    public float speed = 0.06f;
 
 	///Player animation controller
     Animator anim;
 
+	public float powerUp1Timer = 10f;
+
+	public float powerUp3Timer = 10f;
+
+
+	public bool isPowerUp1 = false;
+	public bool isPowerUp2 = false;
+	public bool isPowerUp3 = false;
+
+
+	public GameObject timer1, timer2;
 
 
     void Start() 
@@ -28,7 +39,53 @@ public class Move : MonoBehaviour {
 	/// </summary>
 	void FixedUpdate () 
 	{
-		
+
+
+		//Power Up 1 for speedy move..
+		if (isPowerUp1) 
+		{
+			speed = 0.15f;
+
+			timer1.SetActive (true);
+			timer1.GetComponent<Image> ().fillAmount = powerUp1Timer / 10;
+			powerUp1Timer -= Time.deltaTime;
+			if (powerUp1Timer < 0) 
+			{
+				timer1.SetActive (false);
+				timer1.GetComponent<Image> ().fillAmount = 1;
+				powerUp1Timer = 10f;
+				isPowerUp1 = false;
+				speed = 0.06f;
+			}
+		}
+		//Power Up 2 for bomb count..
+		if (isPowerUp2) 
+		{
+
+			bombCount += 3;
+			isPowerUp2 = false;
+			//			powerUp2Timer -= Time.deltaTime;
+			//			if (powerUp2Timer < 0) 
+			//			{
+			//				powerUp2Timer = 10f;
+			//				isPowerUp2 = false;
+			//			}
+		}
+		//Power Up 3 for Biggger Bomb Explosion..
+		if (isPowerUp3) 
+		{
+			timer2.SetActive (true);
+			timer2.GetComponent<Image> ().fillAmount = powerUp3Timer / 10;
+			powerUp3Timer -= Time.deltaTime;
+			if (powerUp3Timer < 0) 
+			{
+				timer2.SetActive (false);
+				timer2.GetComponent<Image> ().fillAmount = 1;
+				powerUp3Timer = 10f;
+				isPowerUp3 = false;
+			}
+		}
+
 
         Vector2 dir = Vector2.zero;
 
@@ -92,6 +149,7 @@ public class Move : MonoBehaviour {
 			if (life <= 0) 
 			{
 			Debug.Log ("Game ends with death of "+transform.name);
+			GameManager.instance.GameOver ();
 				//isDead = true;
 			}
 
@@ -104,6 +162,7 @@ public class Move : MonoBehaviour {
 	public void BombExplosion( )	
 	{
 		life = 0;
+		GameManager.instance.GameOver ();
 	}
 
 
