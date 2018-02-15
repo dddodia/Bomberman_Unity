@@ -10,3 +10,5 @@ Bomberman game with couch co-op players using Unity3D Game engine.
    >Yellow Bomberman : W-A-S-D keys, Tab key to drop bomb.
 
 >> Added HUD for pickups and player aminities.
+
+>> Enemy AI players with game over functionality with players win conditions.

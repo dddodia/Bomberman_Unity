@@ -5,6 +5,10 @@ public class Bomb : MonoBehaviour {
     // Time after which the bomb explodes
     float time = 3.0f;
 
+	// Worm game objects, needed to destroy the worms after being hit 
+	public GameObject worm1;
+	public GameObject worm2;
+	public GameObject worm3;
 	//  Both player refernce
 	public GameObject bombarman1;
 	public GameObject bombarman2;
@@ -135,7 +139,32 @@ public class Bomb : MonoBehaviour {
 		}
 
 
-	
+		if (GetPosition.roundedWormPos1 == roundedPos || GetPosition.roundedWormPos1 == rangeUp 
+			|| GetPosition.roundedWormPos1 == rangeLeft || GetPosition.roundedWormPos1 == rangeRight
+			|| GetPosition.roundedWormPos1 == rangeDown)
+		{
+
+			if(worm1 == null){
+				worm1 = GameObject.Find ("Worm1");
+				Destroy (worm1.gameObject);}
+		}
+
+		if (GetPosition.roundedWormPos2 == roundedPos || GetPosition.roundedWormPos2 == rangeUp 
+			|| GetPosition.roundedWormPos2 == rangeLeft || GetPosition.roundedWormPos2 == rangeRight
+			|| GetPosition.roundedWormPos2 == rangeDown) {
+			if (worm2 == null){
+				worm2 = GameObject.Find ("Worm2");
+				Destroy (worm2.gameObject);}
+		}
+
+		if (GetPosition.roundedWormPos3 == roundedPos || GetPosition.roundedWormPos3 == rangeUp 
+			|| GetPosition.roundedWormPos3 == rangeLeft || GetPosition.roundedWormPos3 == rangeRight
+			|| GetPosition.roundedWormPos3 == rangeDown)
+		{
+			if (worm3 == null){
+				worm3 = GameObject.Find ("Worm3");
+				Destroy (worm3.gameObject);}
+		}
 
 		
 	}

@@ -10,6 +10,13 @@ public class BombDrop : MonoBehaviour
 	private bool isPlacedBomb;
 
 
+	//Audio blast sound
+	private AudioSource bombBlastAudio;
+
+	void Start()
+	{
+		bombBlastAudio = GetComponent<AudioSource> ();
+	}
 
 	void Update () 
 	{
@@ -55,12 +62,14 @@ public class BombDrop : MonoBehaviour
 	//Will fire this event at bomb blast of blue player
 	void BombBlasted_blue()	
 	{
-		isPlacedBomb = false;;
+		isPlacedBomb = false;
+		bombBlastAudio.Play ();
 	
 	}
 	//Will fire this event at bomb blast of yellow player
 	void BombBlasted_yellow()	
 	{
 		isPlacedBomb = false;
+		bombBlastAudio.Play ();
 	}
 }
